@@ -8,7 +8,7 @@ about:
   - text: GitHub
     href: ambermemon.github.io
   - text: amberayazmemon@gmail.com
-    href:  link
+    href: link
 ---
 
 ::: {.columnpage}
