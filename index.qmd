@@ -22,7 +22,7 @@ Welcome to my research profile website. I'm a student in the Intro to Reproducib
 Replace this section with information about yourself:
 
 - **Name:** Amber Memon
-- **Institution:** University of OKlahoma
+- **Institution:** University of Oklahoma health sciences
 - **Research Interests:** Diabetes, Lipids, Nutrition, Physiology
 - **Email:** amber-memon@ou.edu
 
