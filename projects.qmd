@@ -9,6 +9,7 @@ Here are my research projects and work:
 ## Final Report
 
 My final project for CELL 6351 - Intro to Reproducible Data Analysis Using R.
+Sleeping is a biological phenomenon that helps in the maintenance of health, cognition, emotions, and general wellness. Adequate sleep time and good sleep quality are important determinants of quality of life and well-being. Several studies have indicated that psychological stress has an impact on sleep patterns by decreasing the quality of sleep and sleep duration. Moreover, physical activity has been known to have a role in the regulation of sleep through improving the quality of sleep and the general well-being. The influence of stress levels and physical activity on the quality of sleep may be different among individuals depending on lifestyle and demographics like gender.
 
 [**View Final Report** →](projects/final-report.qmd)
 

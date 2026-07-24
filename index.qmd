@@ -1,13 +1,13 @@
 ---
-title: "Your Name"
+title: "Amber Memon"
 toc: false
 image: "your photo.jpg"
 about:
   template: trestles
   links:
   - text: GitHub
-    href: link
-  - text: email
+    href: ambermemon.github.io
+  - text: amberayazmemon@gmail.com
     href:  link
 ---
 
@@ -21,10 +21,10 @@ Welcome to my research profile website. I'm a student in the Intro to Reproducib
 
 Replace this section with information about yourself:
 
-- **Name:** Your Name Here
-- **Institution:** Your University
-- **Research Interests:** Add your research interests here
-- **Email:** your.email@university.edu
+- **Name:** Amber Memon
+- **Institution:** University of OKlahoma
+- **Research Interests:** Diabetes, Lipids, Nutrition, Physiology
+- **Email:** amber-memon@ou.edu
 
 ## My Research
 
