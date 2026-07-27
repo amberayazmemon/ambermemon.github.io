@@ -1,5 +1,5 @@
 ---
-title: "Final Report: "[Impact of Physical Activity and Stress Levels on Sleep Quality and Sleep Duration]"
+title: "Final Report: Sleep Quality and Lifestyle Analysis"
 date: 2026-06-04
 author: "Amber Memon"
 ---
@@ -12,21 +12,19 @@ Sleeping is a biological phenomenon that helps in the maintenance of health, cog
 Replace this with an introduction to your research question or project. What are you investigating? Why does it matter?sum
 
 ## Methods
-
-Describe how you conducted your analysis. What data did you use? What analyses did you perform?
+I'm using data obtained from Kaggle for sleep health on lifestyle factors.
 
 ## Results
+#On average, participants slept about 7.1 hours per night. Sleep duration ranged from 5.8 to 8.5 hours.
+#The average sleep quality score was about 7.3 out of 10, suggesting generally good sleep quality among participants.
+#Participants had an average physical activity level of 59.2 minutes/day
+#The average stress level was 5.4.
+#Participants walked about 6,817 steps per day on average.
+#Gender Distribution
+#Female: 185 participants
+#Male: 189 participants
 
-Share your findings here. You can include:
 
-- Text explanations
-- Tables
-- Figures and visualizations
-- Code examples (if relevant)
-
-### Example Code Block
-
-Here's a sample R code block:
 
 ```{r}
 # Load a library
@@ -62,18 +60,11 @@ sleepdata <- sleep[, c(
 head(sleepdata)
 str(sleepdata)
 summary(sleepdata)
-#On average, participants slept about 7.1 hours per night. Sleep duration ranged from 5.8 to 8.5 hours.
-#The average sleep quality score was about 7.3 out of 10, suggesting generally good sleep quality among participants.
-#Participants had an average physical activity level of 59.2 minutes/day
-#The average stress level was 5.4.
-#Participants walked about 6,817 steps per day on average.
-#Gender Distribution
-#Female: 185 participants
-#Male: 189 participants
+
 
 #Data work flow
 # Make a plot
-plot(data$x, data$y)
+
 ```
 ## Discussion
 
