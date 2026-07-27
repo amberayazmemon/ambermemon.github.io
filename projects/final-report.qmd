@@ -1,14 +1,15 @@
 ---
-title: "Final Report: [Your Project Title]"
+title: "Final Report: "[Impact of Physical Activity and Stress Levels on Sleep Quality and Sleep Duration]"
 date: 2026-06-04
-author: "Your Name"
+author: "Amber Memon"
 ---
 
-# Final Report: [Your Project Title]
+# Final Report: [Impact of Physical Activity and Stress Levels on Sleep Quality and Sleep Duration]
 
 ## Introduction
+Sleeping is a biological phenomenon that helps in the maintenance of health, cognition, emotions, and general wellness. Adequate sleep time and good sleep quality are important determinants of quality of life and well-being. Several studies have indicated that psychological stress has an impact on sleep patterns by decreasing the quality of sleep and sleep duration. Moreover, physical activity has been known to have a role in the regulation of sleep through improving the quality of sleep and the general well-being. The influence of stress levels and physical activity on the quality of sleep may be different among individuals depending on lifestyle and demographics like gender.
 
-Replace this with an introduction to your research question or project. What are you investigating? Why does it matter?
+Replace this with an introduction to your research question or project. What are you investigating? Why does it matter?sum
 
 ## Methods
 
@@ -30,24 +31,50 @@ Here's a sample R code block:
 ```{r}
 # Load a library
 library(ggplot2)
+library(dplyr)
+library(cowplot)
 
-# Create some sample data
-data <- data.frame(
-  x = 1:10,
-  y = rnorm(10)
-)
 
+# Load data
+sleep <- read.csv("Sleep_health_and_lifestyle_dataset.csv")
+
+#Check data
+str(sleep)
+summary(sleep)
+head(sleep)
+summary(sleep[, c(
+  "Sleep.Duration",
+  "Quality.of.Sleep",
+  "Physical.Activity.Level",
+  "Stress.Level",
+  "Daily.Steps"
+)])
+table(sleep$Gender)
+colSums(is.na(sleep))
+sleepdata <- sleep[, c(
+  "Sleep.Duration",
+  "Quality.of.Sleep",
+  "Physical.Activity.Level",
+  "Stress.Level",
+  "Daily.Steps",
+  "Gender"
+)]
+head(sleepdata)
+str(sleepdata)
+summary(sleepdata)
+#On average, participants slept about 7.1 hours per night. Sleep duration ranged from 5.8 to 8.5 hours.
+#The average sleep quality score was about 7.3 out of 10, suggesting generally good sleep quality among participants.
+#Participants had an average physical activity level of 59.2 minutes/day
+#The average stress level was 5.4.
+#Participants walked about 6,817 steps per day on average.
+#Gender Distribution
+#Female: 185 participants
+#Male: 189 participants
+
+#Data work flow
 # Make a plot
 plot(data$x, data$y)
 ```
-
-### Example Table
-
-| Method | Result | P-value |
-|--------|--------|---------|
-| Analysis 1 | Significant | 0.01 |
-| Analysis 2 | Not Significant | 0.15 |
-
 ## Discussion
 
 What do your results mean? How do they relate to your research question? What limitations exist? What would you do next?
