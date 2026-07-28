@@ -27,6 +27,8 @@ I'm using data obtained from Kaggle for sleep health on lifestyle factors.
 
 
 ```{r}
+#| message: false
+#| warning: false
 # Load a library
 library(ggplot2)
 library(dplyr)
@@ -89,7 +91,7 @@ label = "p.signif"
  labs(
         title = "Sleep Duration by Physical Activity Group",
          x = "Activity Group",
-         y = "Sleep Quality (1-10)"
+         y = "Sleep Duration (hours)"
      ) +
      theme_minimal()
 
@@ -129,7 +131,7 @@ label = "p.signif"
  labs(
         title = "Sleep Duration by Daily step Group",
          x = "Activity Group",
-         y = "Sleep Quality (1-10)"
+         y = "Sleep Duration (hours)"
      ) +
      theme_minimal()
 
@@ -137,18 +139,126 @@ label = "p.signif"
 # =========================================================
 ## Question 3: Does stress level affect sleep?
 ## =========================================================
-#A correlation analysis showed that stress level was strongly associated with sleep quality. Participants with higher stress levels tended to report poorer sleep quality (r = -0.90, p < 0.001).
+#Plot the graph for relationship between stress level and sleep quality
+ggplot(sleep, aes(x = stress_level,
+                  y = quality_of_sleep,
+                  color = stress_level)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm",
+              se = TRUE,
+              color = "yellow") +
+  scale_color_gradient(
+    low = "pink",
+    high = "purple"
+  ) +
+  stat_cor(method = "pearson") +
+  labs(
+    title = "Relationship Between Stress Level and Sleep Quality",
+    x = "Stress Level (1-10)",
+    y = "Sleep Quality (1-10)",
+    color = "Stress Level"
+  ) +
+  theme_minimal()
 
+#Plot the graph for relationship between stress level and sleep duration
+ggplot(sleep, aes(x = stress_level,
+                  y = sleep_duration,
+                  color = stress_level)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm",
+              se = TRUE,
+              color = "yellow") +
+  scale_color_gradient(
+    low = "pink",
+    high = "purple"
+  ) +
+  stat_cor(method = "pearson") +
+  labs(
+    title = "Relationship Between Stress Level and Sleep Duration",
+    x = "Stress Level (1-10)",
+    y = "Sleep Duration (hours)",
+    color = "Stress Level"
+  ) +
+  theme_minimal()
+#A correlation analysis showed that stress level was strongly associated with both sleep quality and sleep duration. Participants with higher stress levels tended to report poorer sleep quality and shorter sleep duration. A strong negative correlation was observed between stress level and sleep quality (r = -0.90, p < 0.001), as well as between stress level and sleep duration (r = -0.81, p < 0.001), indicating that increased stress was associated with reduced sleep outcomes.
+
+## =========================================================
+## Question 4: Does gender affect sleep?
+## =========================================================
+## Gender is already just two groups (Male/Female), so we can
+## directly compare average sleep quality and duration - no
+## grouping step needed first!
+#Plot graph for gender affect on sleep quality
+
+# Run t-test
+test_gender <- t.test(quality_of_sleep ~ gender, data = sleep)
+
+# Box plot
+ggplot(sleep, aes(x = gender,
+                  y = quality_of_sleep,
+                  fill = gender)) +
+  geom_boxplot() +
+  
+  # Add p-value
+  stat_compare_means(
+    method = "t.test",
+    label = "p.format",
+    label.x ="1.5"
+)+
+  # Gender colors
+  scale_fill_manual(
+    values = c(
+      "Female" = "coral",
+      "Male" = "black"
+    )
+  ) +
+  
+  labs(
+    title = "Sleep Quality Differences by Gender",
+    x = "Gender",
+    y = "Sleep Quality (1-10)",
+    fill = "Gender"
+  ) +
+  
+  theme_minimal()
+#Plot graph for gender affect on sleep duration
+# Run t-test
+test_gender <- t.test(sleep_duration ~ gender, data = sleep)
+
+# Box plot
+ggplot(sleep, aes(x = gender,
+                  y = sleep_duration,
+                  fill = gender)) +
+  geom_boxplot() +
+  
+  # Add p-value
+  stat_compare_means(
+    method = "t.test",
+    label = "p.format",
+    label.x ="1.5"
+)+
+  # Gender colors
+  scale_fill_manual(
+    values = c(
+      "Female" = "coral",
+      "Male" = "black"
+    )
+  ) +
+  
+  labs(
+    title = "Sleep Duration Differences by Gender",
+    x = "Gender",
+    y = "Sleep Duration (1-10)",
+    fill = "Gender"
+  ) +
+  
+  theme_minimal()
 ```
-## Discussion
-
-What do your results mean? How do they relate to your research question? What limitations exist? What would you do next?
-
-## Conclusions
-
-Summarize your findings and their implications.
-
-## References
+Conclusion;
+Higher Physical activity increases sleep quality and duration
+Higher Daily steps increases sleep quality and duration
+Higher stress levels lower sleep quality and duration
+Females tend to sleep more and have good quality sleep than males.
 
 Add any references to papers, data sources, or resources you used.
 
