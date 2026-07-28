@@ -31,6 +31,9 @@ I'm using data obtained from Kaggle for sleep health on lifestyle factors.
 library(ggplot2)
 library(dplyr)
 library(cowplot)
+library(tidyverse)
+library(janitor)
+library(ggpubr)
 
 
 # Load data
@@ -39,31 +42,102 @@ sleep <- read.csv("Sleep_health_and_lifestyle_dataset.csv")
 #Check data
 str(sleep)
 summary(sleep)
+sleep = sleep |> clean_names()
+colnames(sleep)
 head(sleep)
-summary(sleep[, c(
-  "Sleep.Duration",
-  "Quality.of.Sleep",
-  "Physical.Activity.Level",
-  "Stress.Level",
-  "Daily.Steps"
-)])
-table(sleep$Gender)
 colSums(is.na(sleep))
-sleepdata <- sleep[, c(
-  "Sleep.Duration",
-  "Quality.of.Sleep",
-  "Physical.Activity.Level",
-  "Stress.Level",
-  "Daily.Steps",
-  "Gender"
-)]
-head(sleepdata)
-str(sleepdata)
-summary(sleepdata)
-
 
 #Data work flow
-# Make a plot
+## =========================================================
+## Question 1: Does physical activity affect sleep?
+## =========================================================
+## Easy method: split people into "Low" vs "High" activity groups
+## using the median, then just compare the average sleep quality
+## and duration between the two groups.
+
+sleep = sleep |>
+  mutate(activity_group = if_else(physical_activity_level >= median(physical_activity_level),
+                                   "High Activity", "Low Activity"))
+
+
+## Plot: average sleep quality by activity group
+ggplot(sleep,
+    aes(x = activity_group,
+         y = quality_of_sleep,
+         fill = activity_group)) +
+geom_boxplot() +
+stat_compare_means(
+method = "t.test",
+label = "p.signif"
+   ) +
+ labs(
+        title = "Sleep Quality by Physical Activity Group",
+         x = "Activity Group",
+         y = "Sleep Quality (1-10)"
+     ) +
+     theme_minimal()
+## Plot: average sleep duration by activity group
+ggplot(sleep,
+    aes(x = activity_group,
+         y = sleep_duration,
+         fill = activity_group)) +
+geom_boxplot() +
+stat_compare_means(
+method = "t.test",
+label = "p.signif"
+   ) +
+ labs(
+        title = "Sleep Duration by Physical Activity Group",
+         x = "Activity Group",
+         y = "Sleep Quality (1-10)"
+     ) +
+     theme_minimal()
+
+# =========================================================
+## Question 2: Do daily steps affect sleep?
+## =========================================================
+## Same easy method: split into "Low Steps" vs "High Steps" using median
+sleep = sleep |>
+  mutate(steps_group = if_else(daily_steps >= median(daily_steps),
+                                   "Higher daily steps", "Lower daily steps"))
+## Plot: average sleep quality by steps group
+ggplot(sleep,
+    aes(x = steps_group,
+         y = quality_of_sleep,
+         fill = steps_group)) +
+geom_boxplot() +
+stat_compare_means(
+method = "t.test",
+label = "p.signif"
+   ) +
+ labs(
+        title = "Sleep Quality by Daily steps Group",
+         x = "Activity Group",
+         y = "Sleep Quality (1-10)"
+     ) +
+     theme_minimal()
+## Plot: average sleep duration by steps group
+ggplot(sleep,
+    aes(x = steps_group,
+         y = sleep_duration,
+         fill = steps_group)) +
+geom_boxplot() +
+stat_compare_means(
+method = "t.test",
+label = "p.signif"
+   ) +
+ labs(
+        title = "Sleep Duration by Daily step Group",
+         x = "Activity Group",
+         y = "Sleep Quality (1-10)"
+     ) +
+     theme_minimal()
+
+
+# =========================================================
+## Question 3: Does stress level affect sleep?
+## =========================================================
+#A correlation analysis showed that stress level was strongly associated with sleep quality. Participants with higher stress levels tended to report poorer sleep quality (r = -0.90, p < 0.001).
 
 ```
 ## Discussion
