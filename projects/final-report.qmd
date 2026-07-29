@@ -102,6 +102,45 @@ ggplot(sleep,
     y = "Sleep Duration (hours)"
   ) +
   theme_minimal()
+# =========================================================
+## Question 2: Do daily steps affect sleep?
+## =========================================================
+## Same easy method: split into "Low Steps" vs "High Steps" using median
+sleep = sleep |>
+  mutate(steps_group = if_else(daily_steps >= median(daily_steps),
+                               "Higher daily steps", "Lower daily steps"))
+## Plot: average sleep quality by steps group
+ggplot(sleep,
+       aes(x = steps_group,
+           y = quality_of_sleep,
+           fill = steps_group)) +
+  geom_boxplot() +
+  stat_compare_means(
+    method = "t.test",
+    label = "p.signif"
+  ) +
+  labs(
+    title = "Sleep Quality by Daily steps Group",
+    x = "Activity Group",
+    y = "Sleep Quality (1-10)"
+  ) +
+  theme_minimal()
+## Plot: average sleep duration by steps group
+ggplot(sleep,
+       aes(x = steps_group,
+           y = sleep_duration,
+           fill = steps_group)) +
+  geom_boxplot() +
+  stat_compare_means(
+    method = "t.test",
+    label = "p.signif"
+  ) +
+  labs(
+    title = "Sleep Duration by Daily step Group",
+    x = "Activity Group",
+    y = "Sleep Duration (hours)"
+  ) +
+  theme_minimal()
 
 ```
 
