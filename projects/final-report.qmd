@@ -102,6 +102,7 @@ ggplot(sleep,
     y = "Sleep Duration (hours)"
   ) +
   theme_minimal()
+
 # =========================================================
 ## Question 2: Do daily steps affect sleep?
 ## =========================================================
@@ -125,6 +126,7 @@ ggplot(sleep,
     y = "Sleep Quality (1-10)"
   ) +
   theme_minimal()
+
 ## Plot: average sleep duration by steps group
 ggplot(sleep,
        aes(x = steps_group,
