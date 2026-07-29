@@ -148,6 +148,8 @@ ggplot(sleep,
 
 STRESS AND SLEEP
 ```{r}
+#| message: false
+#| warning: false
 
 # =========================================================
 ## Question 3: Does stress level affect sleep?
