@@ -9,22 +9,27 @@ author: "Amber Memon"
 ## Introduction
 Sleeping is a biological phenomenon that helps in the maintenance of health, cognition, emotions, and general wellness. Adequate sleep time and good sleep quality are important determinants of quality of life and well-being. Several studies have indicated that psychological stress has an impact on sleep patterns by decreasing the quality of sleep and sleep duration. Moreover, physical activity has been known to have a role in the regulation of sleep through improving the quality of sleep and the general well-being. The influence of stress levels and physical activity on the quality of sleep may be different among individuals depending on lifestyle and demographics like gender.
 
-Replace this with an introduction to your research question or project. What are you investigating? Why does it matter?sum
 
 ## Methods
 I'm using data obtained from Kaggle for sleep health on lifestyle factors.
 
 ## Results
-#On average, participants slept about 7.1 hours per night. Sleep duration ranged from 5.8 to 8.5 hours.
-#The average sleep quality score was about 7.3 out of 10, suggesting generally good sleep quality among participants.
-#Participants had an average physical activity level of 59.2 minutes/day
-#The average stress level was 5.4.
-#Participants walked about 6,817 steps per day on average.
-#Gender Distribution
-#Female: 185 participants
-#Male: 189 participants
 
+On average, participants slept about 7.1 hours per night. Sleep duration ranged from 5.8 to 8.5 hours.
 
+The average sleep quality score was about 7.3 out of 10, suggesting generally good sleep quality among participants.
+
+Participants had an average physical activity level of 59.2 minutes/day
+
+The average stress level was 5.4.
+
+Participants walked about 6,817 steps per day on average.
+
+Gender Distribution
+Female: 185 participants
+Male: 189 participants
+
+Data Loading
 
 ```{r}
 #| message: false
@@ -49,8 +54,12 @@ colnames(sleep)
 head(sleep)
 colSums(is.na(sleep))
 
-#Data work flow
-## =========================================================
+```
+CODE AND FIGURES
+
+PHYSICAL HEALTH AND SLEEP
+```{r}
+##==========================================================
 ## Question 1: Does physical activity affect sleep?
 ## =========================================================
 ## Easy method: split people into "Low" vs "High" activity groups
@@ -59,82 +68,45 @@ colSums(is.na(sleep))
 
 sleep = sleep |>
   mutate(activity_group = if_else(physical_activity_level >= median(physical_activity_level),
-                                   "High Activity", "Low Activity"))
-
+                                  "High Activity", "Low Activity"))
 
 ## Plot: average sleep quality by activity group
 ggplot(sleep,
-    aes(x = activity_group,
-         y = quality_of_sleep,
-         fill = activity_group)) +
-geom_boxplot() +
-stat_compare_means(
-method = "t.test",
-label = "p.signif"
-   ) +
- labs(
-        title = "Sleep Quality by Physical Activity Group",
-         x = "Activity Group",
-         y = "Sleep Quality (1-10)"
-     ) +
-     theme_minimal()
+       aes(x = activity_group,
+           y = quality_of_sleep,
+           fill = activity_group)) +
+  geom_boxplot() +
+  stat_compare_means(
+    method = "t.test",
+    label = "p.signif"
+  ) +
+  labs(
+    title = "Sleep Quality by Physical Activity Group",
+    x = "Activity Group",
+    y = "Sleep Quality (1-10)"
+  ) +
+  theme_minimal()
 ## Plot: average sleep duration by activity group
 ggplot(sleep,
-    aes(x = activity_group,
-         y = sleep_duration,
-         fill = activity_group)) +
-geom_boxplot() +
-stat_compare_means(
-method = "t.test",
-label = "p.signif"
-   ) +
- labs(
-        title = "Sleep Duration by Physical Activity Group",
-         x = "Activity Group",
-         y = "Sleep Duration (hours)"
-     ) +
-     theme_minimal()
+       aes(x = activity_group,
+           y = sleep_duration,
+           fill = activity_group)) +
+  geom_boxplot() +
+  stat_compare_means(
+    method = "t.test",
+    label = "p.signif"
+  ) +
+  labs(
+    title = "Sleep Duration by Physical Activity Group",
+    x = "Activity Group",
+    y = "Sleep Duration (hours)"
+  ) +
+  theme_minimal()
 
-# =========================================================
-## Question 2: Do daily steps affect sleep?
-## =========================================================
-## Same easy method: split into "Low Steps" vs "High Steps" using median
-sleep = sleep |>
-  mutate(steps_group = if_else(daily_steps >= median(daily_steps),
-                                   "Higher daily steps", "Lower daily steps"))
-## Plot: average sleep quality by steps group
-ggplot(sleep,
-    aes(x = steps_group,
-         y = quality_of_sleep,
-         fill = steps_group)) +
-geom_boxplot() +
-stat_compare_means(
-method = "t.test",
-label = "p.signif"
-   ) +
- labs(
-        title = "Sleep Quality by Daily steps Group",
-         x = "Activity Group",
-         y = "Sleep Quality (1-10)"
-     ) +
-     theme_minimal()
-## Plot: average sleep duration by steps group
-ggplot(sleep,
-    aes(x = steps_group,
-         y = sleep_duration,
-         fill = steps_group)) +
-geom_boxplot() +
-stat_compare_means(
-method = "t.test",
-label = "p.signif"
-   ) +
- labs(
-        title = "Sleep Duration by Daily step Group",
-         x = "Activity Group",
-         y = "Sleep Duration (hours)"
-     ) +
-     theme_minimal()
+```
 
+STRESS AND SLEEP
+```{r}
 
 # =========================================================
 ## Question 3: Does stress level affect sleep?
@@ -180,86 +152,66 @@ ggplot(sleep, aes(x = stress_level,
     color = "Stress Level"
   ) +
   theme_minimal()
-#A correlation analysis showed that stress level was strongly associated with both sleep quality and sleep duration. Participants with higher stress levels tended to report poorer sleep quality and shorter sleep duration. A strong negative correlation was observed between stress level and sleep quality (r = -0.90, p < 0.001), as well as between stress level and sleep duration (r = -0.81, p < 0.001), indicating that increased stress was associated with reduced sleep outcomes.
+```
 
-## =========================================================
-## Question 4: Does gender affect sleep?
-## =========================================================
-## Gender is already just two groups (Male/Female), so we can
-## directly compare average sleep quality and duration - no
-## grouping step needed first!
-#Plot graph for gender affect on sleep quality
-
-# Run t-test
-test_gender <- t.test(quality_of_sleep ~ gender, data = sleep)
-
-# Box plot
-ggplot(sleep, aes(x = gender,
-                  y = quality_of_sleep,
-                  fill = gender)) +
+GENDER DIFFERENCE AND SLEEP 
+```{r}
+#gender difference in sleep duration
+ ggplot(sleep, aes(x = gender, y = quality_of_sleep, fill = gender)) +
   geom_boxplot() +
-  
-  # Add p-value
   stat_compare_means(
     method = "t.test",
     label = "p.format",
-    label.x ="1.5"
-)+
-  # Gender colors
+    label.x = 2,
+  label.y = 9.5
+  ) +
+
   scale_fill_manual(
     values = c(
       "Female" = "coral",
       "Male" = "black"
     )
   ) +
-  
+
   labs(
     title = "Sleep Quality Differences by Gender",
     x = "Gender",
-    y = "Sleep Quality (1-10)",
+    y = "Sleep Duration (hours)",
     fill = "Gender"
   ) +
-  
-  theme_minimal()
-#Plot graph for gender affect on sleep duration
-# Run t-test
-test_gender <- t.test(sleep_duration ~ gender, data = sleep)
 
-# Box plot
-ggplot(sleep, aes(x = gender,
-                  y = sleep_duration,
-                  fill = gender)) +
+  theme_minimal()
+
+#gender difference in sleep duration
+
+ggplot(sleep, aes(x = gender, y = sleep_duration, fill = gender)) +
   geom_boxplot() +
-  
-  # Add p-value
   stat_compare_means(
     method = "t.test",
-    label = "p.format",
-    label.x ="1.5"
-)+
-  # Gender colors
+    label = "p.format"
+  ) +
+
   scale_fill_manual(
     values = c(
       "Female" = "coral",
       "Male" = "black"
     )
   ) +
-  
+
   labs(
     title = "Sleep Duration Differences by Gender",
     x = "Gender",
-    y = "Sleep Duration (1-10)",
+    y = "Sleep Duration (hours)",
     fill = "Gender"
   ) +
-  
+
   theme_minimal()
+
 ```
-Conclusion;
+CONCLUSION;
+
 Higher Physical activity increases sleep quality and duration
 Higher Daily steps increases sleep quality and duration
 Higher stress levels lower sleep quality and duration
 Females tend to sleep more and have good quality sleep than males.
 
----
-
-**Last updated:** June 2026
